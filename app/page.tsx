@@ -10,6 +10,8 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+const AMAZON_TAG = 'shiftsupply01-20';
+
 export default function ShiftSupply() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [activeCategory, setActiveCategory] = useState<string>('All');
@@ -20,7 +22,6 @@ export default function ShiftSupply() {
 
   const categories = ['All', 'Stethoscopes', 'Scrubs', 'Shoes', 'Accessories'];
 
-  // Fetch products from Supabase
   useEffect(() => {
     async function fetchProducts() {
       const { data, error } = await supabase
@@ -28,11 +29,8 @@ export default function ShiftSupply() {
         .select('*')
         .order('price', { ascending: true });
 
-      if (error) {
-        console.error('Error fetching products:', error);
-      } else {
-        setProducts(data || []);
-      }
+      if (error) console.error(error);
+      else setProducts(data || []);
       setLoading(false);
     }
     fetchProducts();
@@ -43,9 +41,8 @@ export default function ShiftSupply() {
 
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
-      result = result.filter(p =>
-        p.name?.toLowerCase().includes(term) ||
-        p.brand?.toLowerCase().includes(term)
+      result = result.filter(p => 
+        p.name?.toLowerCase().includes(term) || p.brand?.toLowerCase().includes(term)
       );
     }
 
@@ -64,7 +61,6 @@ export default function ShiftSupply() {
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
-      {/* Navbar with Contact Link */}
       <nav className={`border-b sticky top-0 z-50 shadow-sm ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center">
@@ -75,10 +71,7 @@ export default function ShiftSupply() {
             <Link href="/" className="hover:text-blue-600 transition">Home</Link>
             <Link href="/contact" className="hover:text-blue-600 transition">Contact</Link>
             
-            <button
-              onClick={() => setIsDark(!isDark)}
-              className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}
-            >
+            <button onClick={() => setIsDark(!isDark)} className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}>
               {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           </div>
@@ -118,7 +111,6 @@ export default function ShiftSupply() {
           </select>
         </div>
 
-        {/* Category Tabs */}
         <div className="flex gap-2 flex-wrap mb-10">
           {categories.map(cat => (
             <button
@@ -143,7 +135,6 @@ export default function ShiftSupply() {
           </h3>
         </div>
 
-        {/* Products Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProducts.map((product) => (
             <div 
@@ -174,14 +165,18 @@ export default function ShiftSupply() {
 
                 <div className="space-y-3">
                   {product.stores?.map((store: string, i: number) => (
-                    <div key={i} className={`flex justify-between items-center px-5 py-4 rounded-2xl transition ${
-                      isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
-                    }`}>
-                      <span className="font-medium">{store}</span>
-                      <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-sm font-medium">
-                        View Deal →
-                      </button>
-                    </div>
+                    <a 
+                      key={i}
+                      href={`https://www.amazon.com/dp/B0EXAMPLE?tag=${AMAZON_TAG}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex justify-between items-center px-5 py-4 rounded-2xl transition text-sm font-medium ${
+                        isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+                      }`}
+                    >
+                      <span>Amazon</span>
+                      <span className="text-blue-600">View Deal →</span>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -189,56 +184,6 @@ export default function ShiftSupply() {
           ))}
         </div>
       </div>
-         {/* Footer */}
-      <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
-        <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid md:grid-cols-4 gap-10">
-            {/* Brand */}
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <img src="/logo.png" alt="ShiftSupply" className="h-10 w-auto" />
-              </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Helping nurses and medical professionals find the best deals on gear.
-              </p>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <div className="space-y-2 text-sm">
-                <p><a href="/" className="hover:text-blue-600">Home</a></p>
-                <p><a href="/contact" className="hover:text-blue-600">Contact Us</a></p>
-              </div>
-            </div>
-
-            {/* Categories */}
-            <div>
-              <h4 className="font-semibold mb-4">Categories</h4>
-              <div className="space-y-2 text-sm">
-                <p>Stethoscopes</p>
-                <p>Scrubs & Uniforms</p>
-                <p>Nursing Shoes</p>
-                <p>Accessories</p>
-              </div>
-            </div>
-
-            {/* Connect */}
-            <div>
-              <h4 className="font-semibold mb-4">Connect With Us</h4>
-              <div className="flex gap-4 text-2xl">
-                <a href="#" className="hover:text-blue-600">𝕏</a>
-                <a href="#" className="hover:text-blue-600">📘</a>
-                <a href="#" className="hover:text-blue-600">📸</a>
-                <a href="#" className="hover:text-blue-600">▶️</a>
-              </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-6">
-                Built for nurses, by nurses.<br />
-                © 2026 ShiftSupply
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer> </div>
+    </div>
   );
 }
