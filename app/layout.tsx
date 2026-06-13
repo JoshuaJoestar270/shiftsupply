@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     ],
     apple: '/favicon_io/apple-touch-icon.png',
   },
+  other: {
+    'Impact-Site-Verification': '163e2763-78ec-4a32-925d-84523a499246',
+  },
 };
 
 export default function RootLayout({
@@ -20,6 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body>{children}</body>
     </html>
   );
