@@ -59,7 +59,6 @@ export default function ShiftSupply() {
     return result;
   }, [products, searchTerm, activeCategory, sortOption]);
 
-  // Real Amazon ASINs
   const getAmazonLink = (product: any) => {
     let asin = 'B00Q7J4K3K'; // Littmann Classic III
 
@@ -69,16 +68,88 @@ export default function ShiftSupply() {
     if (product.name.includes("Hoka")) asin = 'B09V5K5K5K';
     if (product.name.includes("Cherokee")) asin = 'B07G5G5G5G';
     if (product.name.includes("Skechers")) asin = 'B07J5J5J5J';
-    if (product.name.includes("Compression Socks")) asin = 'B07Z5Z5Z5Z';
+    if (product.name.includes("Compression")) asin = 'B07Z5Z5Z5Z';
 
     return `https://www.amazon.com/dp/${asin}?tag=${AMAZON_TAG}`;
   };
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
-      {/* Navbar, Hero, Filters - same as before */}
+      {/* Navbar */}
+      <nav className={`border-b sticky top-0 z-50 shadow-sm ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center">
+            <img src="/logo.png" alt="ShiftSupply" className="h-32 w-auto" />
+          </div>
 
+          <div className="flex items-center gap-8 text-sm font-medium">
+            <Link href="/" className="hover:text-blue-600 transition">Home</Link>
+            <Link href="/contact" className="hover:text-blue-600 transition">Contact</Link>
+            
+            <button onClick={() => setIsDark(!isDark)} className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}>
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Banner */}
+      <div className={`py-16 ${isDark ? 'bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900' : 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700'} text-white`}>
+        <div className="max-w-4xl mx-auto text-center px-6">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">Stop Overpaying<br />for Nursing Gear</h2>
+          <p className="text-xl opacity-90">Real deals aggregated from top stores</p>
+        </div>
+      </div>
+
+      {/* Filters */}
       <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <input
+            type="text"
+            placeholder="Search stethoscope, figs, dansko, littmann..."
+            className={`flex-1 px-6 py-4 rounded-2xl text-lg focus:outline-none focus:border-blue-500 ${
+              isDark ? 'bg-gray-900 border border-gray-700 text-white' : 'bg-white border border-gray-200'
+            }`}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          <select 
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value as 'price-low' | 'price-high')}
+            className={`px-6 py-4 rounded-2xl focus:outline-none ${
+              isDark ? 'bg-gray-900 border border-gray-700 text-white' : 'bg-white border border-gray-200'
+            }`}
+          >
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+
+        <div className="flex gap-2 flex-wrap mb-10">
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-6 py-3 rounded-2xl font-medium transition-all ${
+                activeCategory === cat 
+                  ? 'bg-blue-600 text-white' 
+                  : isDark 
+                    ? 'bg-gray-900 hover:bg-gray-800 border border-gray-700' 
+                    : 'bg-white border border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-2xl font-semibold">
+            {loading ? "Loading products..." : `${filteredProducts.length} Products`}
+          </h3>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProducts.map((product) => (
             <div key={product.id} className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
