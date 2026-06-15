@@ -59,22 +59,15 @@ export default function ShiftSupply() {
     return result;
   }, [products, searchTerm, activeCategory, sortOption]);
 
-  // Real ASINs for popular products
   const getAmazonLink = (product: any) => {
-    let asin = 'B00Q7J4K3K'; // Default
+    // Special case for Grey's Anatomy
+    if (product.name.includes("Grey's Anatomy")) {
+      return `https://www.amazon.com/Greys-Anatomy-41423-Top-Black/dp/B019951SXE?tag=${AMAZON_TAG}`;
+    }
 
-    if (product.name.includes("Classic III")) asin = 'B00Q7J4K3K';
-    if (product.name.includes("Cardiology")) asin = 'B07ZPKN6YR';
-    if (product.name.includes("Yola")) asin = 'B08L3Q5Z5Z';
-    if (product.name.includes("Catarina")) asin = 'B08L3Q5Z5Z';
-    if (product.name.includes("Dansko")) asin = 'B07H5N5N5N';
-    if (product.name.includes("Hoka")) asin = 'B09V5K5K5K';
-    if (product.name.includes("Cherokee")) asin = 'B07G5G5G5G';
-    if (product.name.includes("Grey's Anatomy")) asin = 'B07J5J5J5J';
-    if (product.name.includes("Skechers")) asin = 'B07J5J5J5J';
-    if (product.name.includes("Compression Socks")) asin = 'B07Z5Z5Z5Z';
-
-    return `https://www.amazon.com/dp/${asin}?tag=${AMAZON_TAG}`;
+    // Default search fallback for other products
+    const searchQuery = encodeURIComponent(product.name);
+    return `https://www.amazon.com/s?k=${searchQuery}&tag=${AMAZON_TAG}`;
   };
 
   return (
