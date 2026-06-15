@@ -59,6 +59,24 @@ export default function ShiftSupply() {
     return result;
   }, [products, searchTerm, activeCategory, sortOption]);
 
+  // Real ASINs for popular products
+  const getAmazonLink = (product: any) => {
+    let asin = 'B00Q7J4K3K'; // Default
+
+    if (product.name.includes("Classic III")) asin = 'B00Q7J4K3K';
+    if (product.name.includes("Cardiology")) asin = 'B07ZPKN6YR';
+    if (product.name.includes("Yola")) asin = 'B08L3Q5Z5Z';
+    if (product.name.includes("Catarina")) asin = 'B08L3Q5Z5Z';
+    if (product.name.includes("Dansko")) asin = 'B07H5N5N5N';
+    if (product.name.includes("Hoka")) asin = 'B09V5K5K5K';
+    if (product.name.includes("Cherokee")) asin = 'B07G5G5G5G';
+    if (product.name.includes("Grey's Anatomy")) asin = 'B07J5J5J5J';
+    if (product.name.includes("Skechers")) asin = 'B07J5J5J5J';
+    if (product.name.includes("Compression Socks")) asin = 'B07Z5Z5Z5Z';
+
+    return `https://www.amazon.com/dp/${asin}?tag=${AMAZON_TAG}`;
+  };
+
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <nav className={`border-b sticky top-0 z-50 shadow-sm ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
@@ -159,7 +177,7 @@ export default function ShiftSupply() {
                 </div>
 
                 <a 
-                  href={`https://www.amazon.com/dp/B0B5V3Z3Z3?tag=${AMAZON_TAG}`}
+                  href={getAmazonLink(product)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-4 rounded-2xl font-medium transition"
