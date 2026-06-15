@@ -137,12 +137,7 @@ export default function ShiftSupply() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProducts.map((product) => (
-            <div 
-              key={product.id} 
-              className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl ${
-                isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'
-              }`}
-            >
+            <div key={product.id} className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
               <div className="h-52 bg-gray-100 flex items-center justify-center text-8xl relative">
                 {product.category === "Stethoscopes" && "🩺"}
                 {product.category === "Scrubs" && "👕"}
@@ -163,22 +158,14 @@ export default function ShiftSupply() {
                   {product.original_price && <span className="text-gray-400 line-through">${product.original_price}</span>}
                 </div>
 
-                <div className="space-y-3">
-                  {product.stores?.map((store: string, i: number) => (
-                    <a 
-                      key={i}
-                      href={`https://www.amazon.com/dp/B0EXAMPLE?tag=${AMAZON_TAG}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex justify-between items-center px-5 py-4 rounded-2xl transition text-sm font-medium ${
-                        isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
-                      }`}
-                    >
-                      <span>Amazon</span>
-                      <span className="text-blue-600">View Deal →</span>
-                    </a>
-                  ))}
-                </div>
+                <a 
+                  href={`https://www.amazon.com/dp/B0B5V3Z3Z3?tag=${AMAZON_TAG}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-4 rounded-2xl font-medium transition"
+                >
+                  View on Amazon →
+                </a>
               </div>
             </div>
           ))}
