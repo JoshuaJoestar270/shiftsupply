@@ -178,7 +178,7 @@ export default function ShiftSupply() {
         </div>
       </div>
 
-      {/* Professional Footer */}
+        {/* Professional Footer */}
       <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid md:grid-cols-4 gap-10">
@@ -218,7 +218,11 @@ export default function ShiftSupply() {
                   rel="noopener noreferrer"
                   className="hover:scale-110 transition-transform"
                 >
-                  <img src="/instagram.png" alt="Instagram" className="h-10 w-10" />
+                  <img 
+                    src="/instagram.png" 
+                    alt="Instagram" 
+                    className="h-10 w-10 object-contain" 
+                  />
                 </a>
                 <a 
                   href="https://www.tiktok.com/@shiftsupply0" 
@@ -226,7 +230,11 @@ export default function ShiftSupply() {
                   rel="noopener noreferrer"
                   className="hover:scale-110 transition-transform"
                 >
-                  <img src="/tiktok.png" alt="TikTok" className="h-10 w-10" />
+                  <img 
+                    src="/tiktok.png" 
+                    alt="TikTok" 
+                    className="h-10 w-10 object-contain" 
+                  />
                 </a>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-8">
