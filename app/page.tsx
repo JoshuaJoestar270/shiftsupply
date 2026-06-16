@@ -178,7 +178,7 @@ export default function ShiftSupply() {
         </div>
       </div>
 
-        {/* Updated Footer with Real Social Icons */}
+      {/* Footer with Real Social Icons */}
       <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid md:grid-cols-4 gap-10">
@@ -211,12 +211,12 @@ export default function ShiftSupply() {
 
             <div>
               <h4 className="font-semibold mb-4">Follow Us</h4>
-              <div className="flex gap-6 text-3xl">
+              <div className="flex gap-6">
                 <a href="https://www.instagram.com/shift.supply_" target="_blank" rel="noopener noreferrer">
-                  <img src="/instagram.png" alt="Instagram" className="h-9 w-9 hover:scale-110 transition" />
+                  <img src="/instagram.png" alt="Instagram" className="h-10 w-10 hover:scale-110 transition" />
                 </a>
                 <a href="https://www.tiktok.com/@shiftsupply0" target="_blank" rel="noopener noreferrer">
-                  <img src="/tiktok.png" alt="TikTok" className="h-9 w-9 hover:scale-110 transition" />
+                  <img src="/tiktok.png" alt="TikTok" className="h-10 w-10 hover:scale-110 transition" />
                 </a>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-6">
@@ -227,3 +227,6 @@ export default function ShiftSupply() {
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
