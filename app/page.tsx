@@ -178,30 +178,33 @@ export default function ShiftSupply() {
         </div>
       </div>
 
-      {/* Footer with Real Social Icons */}
+          {/* Professional Footer */}
       <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid md:grid-cols-4 gap-10">
+            {/* Brand */}
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <img src="/logo.png" alt="ShiftSupply" className="h-10 w-auto" />
               </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                 Helping nurses and medical professionals find the best deals on gear.
               </p>
             </div>
 
+            {/* Quick Links */}
             <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <div className="space-y-2 text-sm">
-                <p><Link href="/" className="hover:text-blue-600">Home</Link></p>
-                <p><Link href="/contact" className="hover:text-blue-600">Contact</Link></p>
+              <h4 className="font-semibold mb-4 text-lg">Quick Links</h4>
+              <div className="space-y-3 text-sm">
+                <p><Link href="/" className="hover:text-blue-600 transition">Home</Link></p>
+                <p><Link href="/contact" className="hover:text-blue-600 transition">Contact</Link></p>
               </div>
             </div>
 
+            {/* Categories */}
             <div>
-              <h4 className="font-semibold mb-4">Categories</h4>
-              <div className="space-y-2 text-sm">
+              <h4 className="font-semibold mb-4 text-lg">Categories</h4>
+              <div className="space-y-3 text-sm">
                 <p>Stethoscopes</p>
                 <p>Scrubs</p>
                 <p>Nursing Shoes</p>
@@ -209,17 +212,28 @@ export default function ShiftSupply() {
               </div>
             </div>
 
+            {/* Socials */}
             <div>
-              <h4 className="font-semibold mb-4">Follow Us</h4>
+              <h4 className="font-semibold mb-4 text-lg">Follow Us</h4>
               <div className="flex gap-6">
-                <a href="https://www.instagram.com/shift.supply_" target="_blank" rel="noopener noreferrer">
-                  <img src="/instagram.png" alt="Instagram" className="h-10 w-10 hover:scale-110 transition" />
+                <a 
+                  href="https://www.instagram.com/shift.supply_" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:scale-110 transition-transform"
+                >
+                  <img src="/instagram.png" alt="Instagram" className="h-11 w-11" />
                 </a>
-                <a href="https://www.tiktok.com/@shiftsupply0" target="_blank" rel="noopener noreferrer">
-                  <img src="/tiktok.png" alt="TikTok" className="h-10 w-10 hover:scale-110 transition" />
+                <a 
+                  href="https://www.tiktok.com/@shiftsupply0" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:scale-110 transition-transform"
+                >
+                  <img src="/tiktok.png" alt="TikTok" className="h-11 w-11" />
                 </a>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-6">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-8">
                 Built for nurses, by nurses.<br />
                 © 2026 ShiftSupply
               </p>
