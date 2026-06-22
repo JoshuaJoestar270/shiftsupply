@@ -120,7 +120,10 @@ export default function ShiftSupply() {
           </div>
         </div>
       </nav>
-
+{/* BIG TEST BOX - should be very obvious */}
+<div className="max-w-7xl mx-auto px-6 py-8 bg-red-500 text-white text-center text-2xl font-bold rounded-3xl mb-8">
+  🚨 TEST - IF YOU SEE THIS BOX, THE NEW CODE IS LIVE
+</div>
       {/* Hero Section */}
       <div className={`py-16 ${isDark ? 'bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900' : 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700'} text-white`}>
         <div className="max-w-4xl mx-auto text-center px-6">
