@@ -52,21 +52,17 @@ export default function ShiftSupply() {
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
-    // Search
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
       result = result.filter(p => 
-        p.name?.toLowerCase().includes(term) || 
-        p.brand?.toLowerCase().includes(term)
+        p.name?.toLowerCase().includes(term) || p.brand?.toLowerCase().includes(term)
       );
     }
 
-    // Category filter
     if (activeCategory !== 'All') {
       result = result.filter(p => p.category === activeCategory);
     }
 
-    // Sort
     if (sortOption === 'price-low') {
       result.sort((a, b) => a.price - b.price);
     } else {
@@ -77,6 +73,7 @@ export default function ShiftSupply() {
   }, [products, searchTerm, activeCategory, sortOption]);
 
   const getAmazonLink = (product: any) => {
+    // Updated links as requested
     if (product.name.includes("Master Cardiology")) return "https://amzn.to/4veMsDb";
     if (product.name.includes("Classic III")) return "https://amzn.to/43AP0PZ";
     if (product.name.includes("Cardiology IV")) return "https://amzn.to/4ecPkKR";
@@ -85,7 +82,7 @@ export default function ShiftSupply() {
     if (product.name.includes("Catarina")) return "https://amzn.to/4ed0lvI";
     if (product.name.includes("High Waisted")) return "https://amzn.to/4eJiFwB";
     if (product.name.includes("Cherokee")) return "https://amzn.to/3QjyUHr";
-    if (product.name.includes("Grey's Anatomy")) return "https://amzn.to/43GhE24";
+    if (product.name.includes("Grey's Anatomy")) return "https://amzn.to/4aNf6mF";
     if (product.name.includes("Dansko")) return "https://amzn.to/4ovhX9w";
     if (product.name.includes("Hoka")) return "https://amzn.to/4fKFOjg";
     if (product.name.includes("Skechers")) return "https://amzn.to/4vYsqwW";
@@ -95,8 +92,11 @@ export default function ShiftSupply() {
     if (product.name.includes("Blood Pressure")) return "https://amzn.to/3Scot9i";
     if (product.name.includes("Clipboard")) return "https://amzn.to/43GhE24";
     if (product.name.includes("Waterproof")) return "https://amzn.to/4vaDWVH";
-    if (product.name.includes("ID Tag")) return "https://amzn.to/4vQSN7A";
+    if (product.name.includes("ID Tag") || product.name.includes("Littmann stethoscope ID tag")) 
+      return "https://amzn.to/4vkCWhS";
+    if (product.name.includes("MDF Acoustica")) return "https://amzn.to/4oGSASn";
 
+    // Default fallback
     const searchQuery = encodeURIComponent(product.name);
     return `https://www.amazon.com/s?k=${searchQuery}&tag=shiftsupply01-20`;
   };
@@ -244,12 +244,11 @@ export default function ShiftSupply() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer - Keep your existing footer here */}
       <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
-          {/* Your existing footer content */}
           <div className="grid md:grid-cols-4 gap-10">
-            {/* ... (keep your footer as-is) */}
+            {/* Paste your existing footer content here */}
           </div>
         </div>
       </footer>
