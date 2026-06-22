@@ -75,7 +75,6 @@ export default function ShiftSupply() {
   const getAmazonLink = (product: any) => {
     if (product.affiliate_link) return product.affiliate_link;
 
-    // Your mappings
     if (product.name.includes("Master Cardiology")) return "https://amzn.to/4veMsDb";
     if (product.name.includes("Classic III")) return "https://amzn.to/43AP0PZ";
     if (product.name.includes("Cardiology IV")) return "https://amzn.to/4ecPkKR";
@@ -169,7 +168,7 @@ export default function ShiftSupply() {
           </select>
         </div>
 
-        {/* Product Grid */}
+        {/* Products */}
         {loading && <div className="text-center py-20 text-xl">Loading the best deals...</div>}
         {error && <div className="text-center py-20 text-red-500">{error}</div>}
 
@@ -181,7 +180,7 @@ export default function ShiftSupply() {
                   <img 
                     src={product.image_url} 
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                   />
                 ) : (
                   <div className="h-full flex items-center justify-center text-8xl bg-gradient-to-br from-gray-100 to-gray-200">
@@ -220,7 +219,50 @@ export default function ShiftSupply() {
       {/* Footer */}
       <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
-          {/* Paste your footer here */}
+          <div className="grid md:grid-cols-4 gap-10">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <img src="/logo.png" alt="ShiftSupply" className="h-10 w-auto" />
+              </div>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Helping nurses and medical professionals find the best deals on gear.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <div className="space-y-2 text-sm">
+                <p><Link href="/" className="hover:text-blue-600">Home</Link></p>
+                <p><Link href="/contact" className="hover:text-blue-600">Contact</Link></p>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4">Categories</h4>
+              <div className="space-y-2 text-sm">
+                <p>Stethoscopes</p>
+                <p>Scrubs</p>
+                <p>Nursing Shoes</p>
+                <p>Accessories</p>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4">Follow Us</h4>
+              <div className="flex gap-6">
+                <a href="https://www.instagram.com/shift.supply_" target="_blank" rel="noopener noreferrer">
+                  <img src="/instagram.png" alt="Instagram" className="h-10 w-10 hover:scale-110 transition" />
+                </a>
+                <a href="https://www.tiktok.com/@shiftsupply0" target="_blank" rel="noopener noreferrer">
+                  <img src="/tiktok.png" alt="TikTok" className="h-10 w-10 hover:scale-110 transition" />
+                </a>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-8">
+                Built for nurses, by nurses.<br />
+                © 2026 ShiftSupply
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
