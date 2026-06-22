@@ -34,13 +34,13 @@ export default function ShiftSupply() {
 
         if (supabaseError) {
           console.error('Supabase error:', supabaseError);
-          setError('Failed to load products.');
+          setError('Failed to load products. Please try again later.');
         } else {
           setProducts(data || []);
         }
       } catch (err) {
         console.error('Fetch failed:', err);
-        setError('Something went wrong.');
+        setError('Something went wrong. Please check your connection.');
       } finally {
         setLoading(false);
       }
@@ -73,7 +73,6 @@ export default function ShiftSupply() {
   }, [products, searchTerm, activeCategory, sortOption]);
 
   const getAmazonLink = (product: any) => {
-    // Your current mappings (including the recent updates)
     if (product.name.includes("Master Cardiology")) return "https://amzn.to/4veMsDb";
     if (product.name.includes("Classic III")) return "https://amzn.to/43AP0PZ";
     if (product.name.includes("Cardiology IV")) return "https://amzn.to/4ecPkKR";
@@ -102,8 +101,7 @@ export default function ShiftSupply() {
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
-      {/* Navbar & Hero - same as before */}
-
+      {/* Navbar */}
       <nav className={`border-b sticky top-0 z-50 shadow-sm ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center">
@@ -114,17 +112,17 @@ export default function ShiftSupply() {
             <Link href="/" className="hover:text-blue-600 transition">Home</Link>
             <Link href="/contact" className="hover:text-blue-600 transition">Contact</Link>
             
-            <button onClick={() => setIsDark(!isDark)} className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}>
+            <button 
+              onClick={() => setIsDark(!isDark)} 
+              className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}
+            >
               {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </nav>
-{/* BIG TEST BOX - should be very obvious */}
-<div className="max-w-7xl mx-auto px-6 py-8 bg-red-500 text-white text-center text-2xl font-bold rounded-3xl mb-8">
-  🚨 TEST - IF YOU SEE THIS BOX, THE NEW CODE IS LIVE
-</div>
-      {/* Hero Section */}
+
+      {/* Hero */}
       <div className={`py-16 ${isDark ? 'bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900' : 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700'} text-white`}>
         <div className="max-w-4xl mx-auto text-center px-6">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">Stop Overpaying<br />for Nursing Gear</h2>
@@ -154,7 +152,11 @@ export default function ShiftSupply() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-6 py-3 rounded-3xl text-sm font-medium transition-all ${
-                  activeCategory === cat ? 'bg-blue-600 text-white shadow-md' : isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'
+                  activeCategory === cat
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : isDark
+                    ? 'bg-gray-800 hover:bg-gray-700'
+                    : 'bg-gray-100 hover:bg-gray-200'
                 }`}
               >
                 {cat}
@@ -165,34 +167,59 @@ export default function ShiftSupply() {
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value as 'price-low' | 'price-high')}
-            className={`px-5 py-4 rounded-3xl border ${isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'}`}
+            className={`px-5 py-4 rounded-3xl border ${
+              isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'
+            }`}
           >
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
           </select>
         </div>
 
-        {/* Products Grid with Real Images */}
-        {loading && <div className="text-center py-20"><p className="text-xl">Loading the best deals...</p></div>}
-        {error && <div className="text-center py-20 text-red-500"><p>{error}</p></div>}
+        {/* Products Grid */}
+        {loading && (
+          <div className="text-center py-20">
+            <p className="text-xl">Loading the best deals for nurses...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-20 text-red-500">
+            <p>{error}</p>
+            <button onClick={() => window.location.reload()} className="mt-4 underline">
+              Try again
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && filteredProducts.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-xl">No products found matching your search.</p>
+          </div>
+        )}
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProducts.map((product) => (
-            <div key={product.id} className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl group ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
-              <div className="h-52 bg-gray-100 relative overflow-hidden">
+            <div 
+              key={product.id} 
+              className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl group ${
+                isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'
+              }`}
+            >
+              <div className="h-52 bg-gray-100 flex items-center justify-center text-8xl relative overflow-hidden">
                 {product.image_url ? (
                   <img 
                     src={product.image_url} 
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="h-full flex items-center justify-center text-8xl">
+                  <>
                     {product.category === "Stethoscopes" && "🩺"}
                     {product.category === "Scrubs" && "👕"}
                     {product.category === "Shoes" && "👟"}
                     {product.category === "Accessories" && "🧦"}
-                  </div>
+                  </>
                 )}
                 
                 <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-4 py-1 rounded-full">
@@ -202,7 +229,7 @@ export default function ShiftSupply() {
 
               <div className="p-8">
                 <p className="text-blue-600 font-medium">{product.brand}</p>
-                <h4 className="text-xl font-semibold mt-2 mb-3 leading-tight">{product.name}</h4>
+                <h4 className="text-xl font-semibold mt-2 mb-4 leading-tight">{product.name}</h4>
                 
                 <div className="flex items-baseline gap-3 mb-6">
                   <span className="text-4xl font-bold">${product.price}</span>
@@ -226,7 +253,7 @@ export default function ShiftSupply() {
       {/* Footer */}
       <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
-          {/* Your footer content */}
+          {/* Your existing footer content goes here */}
         </div>
       </footer>
     </div>
