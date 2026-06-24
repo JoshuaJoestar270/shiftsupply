@@ -26,7 +26,6 @@ export default function ShiftSupply() {
       try {
         setLoading(true);
         setError(null);
-
         const { data, error: supabaseError } = await supabase
           .from('products')
           .select('*')
@@ -167,14 +166,8 @@ export default function ShiftSupply() {
             <option value="price-high">Price: High to Low</option>
           </select>
         </div>
-{/* DEBUG */}
-<div className="mb-8 p-6 bg-yellow-100 rounded-3xl">
-  <p className="font-bold mb-2">Debug - First Product:</p>
-  <pre className="text-xs overflow-auto">
-    {JSON.stringify(products[0], null, 2)}
-  </pre>
-</div>
-        {/* Products */}
+
+        {/* Products Grid */}
         {loading && <div className="text-center py-20 text-xl">Loading the best deals...</div>}
         {error && <div className="text-center py-20 text-red-500">{error}</div>}
 
@@ -183,10 +176,13 @@ export default function ShiftSupply() {
             <div key={product.id} className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl group ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
               <div className="h-52 bg-gray-100 relative overflow-hidden">
                 {product.image_url ? (
-                  <img 
-                    src={product.image_url} 
+                  <img
+                    src={product.image_url}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
                 ) : (
                   <div className="h-full flex items-center justify-center text-8xl bg-gradient-to-br from-gray-100 to-gray-200">
@@ -234,7 +230,6 @@ export default function ShiftSupply() {
                 Helping nurses and medical professionals find the best deals on gear.
               </p>
             </div>
-
             <div>
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <div className="space-y-2 text-sm">
@@ -242,7 +237,6 @@ export default function ShiftSupply() {
                 <p><Link href="/contact" className="hover:text-blue-600">Contact</Link></p>
               </div>
             </div>
-
             <div>
               <h4 className="font-semibold mb-4">Categories</h4>
               <div className="space-y-2 text-sm">
@@ -252,7 +246,6 @@ export default function ShiftSupply() {
                 <p>Accessories</p>
               </div>
             </div>
-
             <div>
               <h4 className="font-semibold mb-4">Follow Us</h4>
               <div className="flex gap-6">
