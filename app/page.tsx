@@ -167,7 +167,13 @@ export default function ShiftSupply() {
             <option value="price-high">Price: High to Low</option>
           </select>
         </div>
-
+{/* DEBUG BOX */}
+<div className="mb-8 p-6 bg-yellow-100 border border-yellow-300 rounded-3xl">
+  <h3 className="font-bold mb-2">Debug Info (remove later)</h3>
+  <pre className="text-xs overflow-auto max-h-40">
+    First product: {JSON.stringify(products[0], null, 2)}
+  </pre>
+</div>
         {/* Products */}
         {loading && <div className="text-center py-20 text-xl">Loading the best deals...</div>}
         {error && <div className="text-center py-20 text-red-500">{error}</div>}
