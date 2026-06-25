@@ -200,8 +200,14 @@ export default function ShiftSupply() {
                 <h4 className="text-xl font-semibold mt-2 mb-3 leading-tight">{product.name}</h4>
                 
                 <div className="flex items-baseline gap-3 mb-6">
-                  <span className="text-4xl font-bold">${product.price}</span>
-                  {product.original_price && <span className="text-gray-400 line-through">${product.original_price}</span>}
+                  <span className="text-4xl font-bold">
+                    ${Number(product.price).toFixed(2)}
+                  </span>
+                  {product.original_price && (
+                    <span className="text-gray-400 line-through">
+                      ${Number(product.original_price).toFixed(2)}
+                    </span>
+                  )}
                 </div>
 
                 <a 
