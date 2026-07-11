@@ -26,18 +26,25 @@ export default function Contact() {
     setLoading(true);
     setError('');
 
+    console.log('Submitting form with data:', formData); // Debug log
+
     try {
-      const { error: supabaseError } = await supabase
+      const { data, error: supabaseError } = await supabase
         .from('contact_messages')
-        .insert([formData]);
+        .insert([formData])
+        .select();
 
-      if (supabaseError) throw supabaseError;
+      if (supabaseError) {
+        console.error('Supabase Error:', supabaseError);
+        throw supabaseError;
+      }
 
+      console.log('Success! Inserted:', data);
       setSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err: any) {
-      console.error(err);
-      setError('Something went wrong. Please try again.');
+      console.error('Full error:', err);
+      setError('Failed to send message. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -46,10 +53,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-12">
       <div className="max-w-2xl mx-auto px-6">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8 font-medium"
-        >
+        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8 font-medium">
           <ArrowLeft className="w-5 h-5" />
           Back to Home
         </Link>
@@ -66,10 +70,7 @@ export default function Contact() {
             <div className="text-6xl mb-6">✅</div>
             <h3 className="text-2xl font-semibold mb-3">Message Received!</h3>
             <p className="text-gray-600 dark:text-gray-400">Thank you. We'll get back to you soon.</p>
-            <button 
-              onClick={() => setSubmitted(false)}
-              className="mt-6 text-blue-600 hover:text-blue-700"
-            >
+            <button onClick={() => setSubmitted(false)} className="mt-6 text-blue-600 hover:text-blue-700">
               Send another message
             </button>
           </div>
@@ -78,59 +79,27 @@ export default function Contact() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Name</label>
-                <input 
-                  type="text" 
-                  required 
-                  value={formData.name} 
-                  onChange={(e) => setFormData({...formData, name: e.target.value})} 
-                  className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" 
-                  placeholder="Your name" 
-                />
+                <input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" placeholder="Your name" />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Email</label>
-                <input 
-                  type="email" 
-                  required 
-                  value={formData.email} 
-                  onChange={(e) => setFormData({...formData, email: e.target.value})} 
-                  className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" 
-                  placeholder="you@email.com" 
-                />
+                <input type="email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" placeholder="you@email.com" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-2">Subject</label>
-              <input 
-                type="text" 
-                required 
-                value={formData.subject} 
-                onChange={(e) => setFormData({...formData, subject: e.target.value})} 
-                className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" 
-                placeholder="Deal suggestion, partnership..." 
-              />
+              <input type="text" required value={formData.subject} onChange={(e) => setFormData({...formData, subject: e.target.value})} className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" placeholder="Deal suggestion..." />
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-2">Message</label>
-              <textarea 
-                required 
-                rows={7} 
-                value={formData.message} 
-                onChange={(e) => setFormData({...formData, message: e.target.value})} 
-                className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" 
-                placeholder="Write your message here..." 
-              />
+              <textarea required rows={7} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900" placeholder="Write your message here..." />
             </div>
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
-            <button 
-              type="submit" 
-              disabled={loading} 
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-4 rounded-2xl text-lg transition"
-            >
+            <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-4 rounded-2xl text-lg transition">
               {loading ? "Sending..." : "Send Message"}
             </button>
           </form>
