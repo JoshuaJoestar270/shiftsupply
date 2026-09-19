@@ -18,6 +18,7 @@ export default function ShiftSupply() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   const categories = ['All', 'Stethoscopes', 'Scrubs', 'Shoes', 'Accessories'];
 
@@ -30,7 +31,6 @@ export default function ShiftSupply() {
           .from('products')
           .select('*')
           .order('price', { ascending: true });
-
         if (supabaseError) {
           console.error(supabaseError);
           setError('Failed to load products');
@@ -44,36 +44,42 @@ export default function ShiftSupply() {
         setLoading(false);
       }
     }
-
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const hasAccepted = localStorage.getItem('shiftsupply_privacy_accepted');
+    if (!hasAccepted) {
+      setShowPrivacy(true);
+    }
+  }, []);
+
+  const acceptPrivacy = () => {
+    localStorage.setItem('shiftsupply_privacy_accepted', 'true');
+    setShowPrivacy(false);
+  };
+
   const filteredProducts = useMemo(() => {
     let result = [...products];
-
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
-      result = result.filter(p => 
+      result = result.filter(p =>
         p.name?.toLowerCase().includes(term) || p.brand?.toLowerCase().includes(term)
       );
     }
-
     if (activeCategory !== 'All') {
       result = result.filter(p => p.category === activeCategory);
     }
-
     if (sortOption === 'price-low') {
       result.sort((a, b) => a.price - b.price);
     } else {
       result.sort((a, b) => b.price - a.price);
     }
-
     return result;
   }, [products, searchTerm, activeCategory, sortOption]);
 
   const getAmazonLink = (product: any) => {
     if (product.affiliate_link) return product.affiliate_link;
-
     if (product.name.includes("Master Cardiology")) return "https://amzn.to/4veMsDb";
     if (product.name.includes("Classic III")) return "https://amzn.to/43AP0PZ";
     if (product.name.includes("Cardiology IV")) return "https://amzn.to/4ecPkKR";
@@ -92,27 +98,24 @@ export default function ShiftSupply() {
     if (product.name.includes("Blood Pressure")) return "https://amzn.to/3Scot9i";
     if (product.name.includes("Clipboard")) return "https://amzn.to/43GhE24";
     if (product.name.includes("Waterproof")) return "https://amzn.to/4vaDWVH";
-    if (product.name.includes("ID Tag") || product.name.includes("Littmann stethoscope ID tag")) 
+    if (product.name.includes("ID Tag") || product.name.includes("Littmann stethoscope ID tag"))
       return "https://amzn.to/4vkCWhS";
     if (product.name.includes("MDF Acoustica")) return "https://amzn.to/4oGSASn";
-
     const searchQuery = encodeURIComponent(product.name);
     return `https://www.amazon.com/s?k=${searchQuery}&tag=shiftsupply01-20`;
   };
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
-      {/* Navbar */}
       <nav className={`border-b sticky top-0 z-50 shadow-sm ${isDark ? 'bg-gray-900' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center">
             <img src="/logo.png" alt="ShiftSupply" className="h-32 w-auto" />
           </div>
-
           <div className="flex items-center gap-8 text-sm font-medium">
             <Link href="/" className="hover:text-blue-600 transition">Home</Link>
             <Link href="/contact" className="hover:text-blue-600 transition">Contact</Link>
-            
+
             <button onClick={() => setIsDark(!isDark)} className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}>
               {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
@@ -120,7 +123,6 @@ export default function ShiftSupply() {
         </div>
       </nav>
 
-      {/* Hero */}
       <div className={`py-16 ${isDark ? 'bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900' : 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700'} text-white`}>
         <div className="max-w-4xl mx-auto text-center px-6">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">Stop Overpaying<br />for Nursing Gear</h2>
@@ -128,7 +130,6 @@ export default function ShiftSupply() {
         </div>
       </div>
 
-      {/* Filters */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-col md:flex-row gap-4 mb-8 items-end">
           <div className="flex-1">
@@ -142,7 +143,6 @@ export default function ShiftSupply() {
               }`}
             />
           </div>
-
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
               <button
@@ -156,7 +156,6 @@ export default function ShiftSupply() {
               </button>
             ))}
           </div>
-
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value as 'price-low' | 'price-high')}
@@ -167,7 +166,6 @@ export default function ShiftSupply() {
           </select>
         </div>
 
-        {/* Products Grid */}
         {loading && <div className="text-center py-20 text-xl">Loading the best deals...</div>}
         {error && <div className="text-center py-20 text-red-500">{error}</div>}
 
@@ -189,16 +187,15 @@ export default function ShiftSupply() {
                     {product.image_emoji || '🛍️'}
                   </div>
                 )}
-                
+
                 <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-4 py-1 rounded-full">
                   BEST DEAL
                 </div>
               </div>
-
               <div className="p-8">
                 <p className="text-blue-600 font-medium">{product.brand}</p>
                 <h4 className="text-xl font-semibold mt-2 mb-3 leading-tight">{product.name}</h4>
-                
+
                 <div className="flex items-baseline gap-3 mb-6">
                   <span className="text-4xl font-bold">
                     ${Number(product.price).toFixed(2)}
@@ -209,8 +206,7 @@ export default function ShiftSupply() {
                     </span>
                   )}
                 </div>
-
-                <a 
+                <a
                   href={getAmazonLink(product)}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -224,7 +220,6 @@ export default function ShiftSupply() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className={`border-t mt-20 ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'}`}>
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid md:grid-cols-4 gap-10">
@@ -270,6 +265,36 @@ export default function ShiftSupply() {
           </div>
         </div>
       </footer>
+
+      {showPrivacy && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 px-4">
+          <div className={`max-w-lg w-full rounded-3xl p-8 shadow-2xl ${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+            <h3 className="text-2xl font-bold mb-4">Privacy Notice</h3>
+            <div className={`text-sm leading-relaxed space-y-3 max-h-72 overflow-y-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+              <p>
+                ShiftSupply helps nurses compare prices on medical gear and may use affiliate links.
+                If you click a product link and make a purchase, we may earn a commission at no extra cost to you.
+              </p>
+              <p>
+                We may store basic site preferences in your browser (like whether you’ve accepted this notice)
+                and use analytics to understand how the site is used.
+              </p>
+              <p>
+                Contact form submissions are stored so we can respond to you. We do not sell your personal information.
+              </p>
+              <p>
+                By continuing, you agree to this notice and our use of affiliate links.
+              </p>
+            </div>
+            <button
+              onClick={acceptPrivacy}
+              className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-medium transition"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
