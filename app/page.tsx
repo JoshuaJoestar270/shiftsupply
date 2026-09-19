@@ -114,9 +114,12 @@ export default function ShiftSupply() {
           </div>
           <div className="flex items-center gap-8 text-sm font-medium">
             <Link href="/" className="hover:text-blue-600 transition">Home</Link>
+            <Link href="/about" className="hover:text-blue-600 transition">About</Link>
             <Link href="/contact" className="hover:text-blue-600 transition">Contact</Link>
-
-            <button onClick={() => setIsDark(!isDark)} className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}>
+            <button
+              onClick={() => setIsDark(!isDark)}
+              className={`p-3 rounded-2xl transition ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}
+            >
               {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           </div>
@@ -187,7 +190,6 @@ export default function ShiftSupply() {
                     {product.image_emoji || '🛍️'}
                   </div>
                 )}
-
                 <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-4 py-1 rounded-full">
                   BEST DEAL
                 </div>
@@ -195,15 +197,10 @@ export default function ShiftSupply() {
               <div className="p-8">
                 <p className="text-blue-600 font-medium">{product.brand}</p>
                 <h4 className="text-xl font-semibold mt-2 mb-3 leading-tight">{product.name}</h4>
-
                 <div className="flex items-baseline gap-3 mb-6">
-                  <span className="text-4xl font-bold">
-                    ${Number(product.price).toFixed(2)}
-                  </span>
+                  <span className="text-4xl font-bold">${Number(product.price).toFixed(2)}</span>
                   {product.original_price && (
-                    <span className="text-gray-400 line-through">
-                      ${Number(product.original_price).toFixed(2)}
-                    </span>
+                    <span className="text-gray-400 line-through">${Number(product.original_price).toFixed(2)}</span>
                   )}
                 </div>
                 <a
@@ -235,6 +232,7 @@ export default function ShiftSupply() {
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <div className="space-y-2 text-sm">
                 <p><Link href="/" className="hover:text-blue-600">Home</Link></p>
+                <p><Link href="/about" className="hover:text-blue-600">About</Link></p>
                 <p><Link href="/contact" className="hover:text-blue-600">Contact</Link></p>
               </div>
             </div>
