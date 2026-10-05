@@ -80,27 +80,27 @@ export default function ShiftSupply() {
 
   const getAmazonLink = (product: any) => {
     if (product.affiliate_link) return product.affiliate_link;
-    if (product.name.includes("Master Cardiology")) return "https://amzn.to/4veMsDb";
-    if (product.name.includes("Classic III")) return "https://amzn.to/43AP0PZ";
-    if (product.name.includes("Cardiology IV")) return "https://amzn.to/4ecPkKR";
-    if (product.name.includes("Lightweight II")) return "https://amzn.to/4vgXoAo";
-    if (product.name.includes("Yola")) return "https://amzn.to/4a6fZ9P";
-    if (product.name.includes("Catarina")) return "https://amzn.to/4ed0lvI";
-    if (product.name.includes("High Waisted")) return "https://amzn.to/4eJiFwB";
-    if (product.name.includes("Cherokee")) return "https://amzn.to/3QjyUHr";
-    if (product.name.includes("Grey's Anatomy")) return "https://amzn.to/4aNf6mF";
-    if (product.name.includes("Dansko")) return "https://amzn.to/4ovhX9w";
-    if (product.name.includes("Hoka")) return "https://amzn.to/4fKFOjg";
-    if (product.name.includes("Skechers")) return "https://amzn.to/4vYsqwW";
-    if (product.name.includes("Adidas")) return "https://amzn.to/4eJey3D";
-    if (product.name.includes("Compression Socks")) return "https://amzn.to/4a6Zavk";
-    if (product.name.includes("Fanny Pack")) return "https://amzn.to/3QkEObl";
-    if (product.name.includes("Blood Pressure")) return "https://amzn.to/3Scot9i";
-    if (product.name.includes("Clipboard")) return "https://amzn.to/43GhE24";
-    if (product.name.includes("Waterproof")) return "https://amzn.to/4vaDWVH";
-    if (product.name.includes("ID Tag") || product.name.includes("Littmann stethoscope ID tag"))
-      return "https://amzn.to/4vkCWhS";
-    if (product.name.includes("MDF Acoustica")) return "https://amzn.to/4oGSASn";
+    if (product.name.includes('Master Cardiology')) return 'https://amzn.to/4veMsDb';
+    if (product.name.includes('Classic III')) return 'https://amzn.to/43AP0PZ';
+    if (product.name.includes('Cardiology IV')) return 'https://amzn.to/4ecPkKR';
+    if (product.name.includes('Lightweight II')) return 'https://amzn.to/4vgXoAo';
+    if (product.name.includes('Yola')) return 'https://amzn.to/4a6fZ9P';
+    if (product.name.includes('Catarina')) return 'https://amzn.to/4ed0lvI';
+    if (product.name.includes('High Waisted')) return 'https://amzn.to/4eJiFwB';
+    if (product.name.includes('Cherokee')) return 'https://amzn.to/3QjyUHr';
+    if (product.name.includes("Grey's Anatomy")) return 'https://amzn.to/4aNf6mF';
+    if (product.name.includes('Dansko')) return 'https://amzn.to/4ovhX9w';
+    if (product.name.includes('Hoka')) return 'https://amzn.to/4fKFOjg';
+    if (product.name.includes('Skechers')) return 'https://amzn.to/4vYsqwW';
+    if (product.name.includes('Adidas')) return 'https://amzn.to/4eJey3D';
+    if (product.name.includes('Compression Socks')) return 'https://amzn.to/4a6Zavk';
+    if (product.name.includes('Fanny Pack')) return 'https://amzn.to/3QkEObl';
+    if (product.name.includes('Blood Pressure')) return 'https://amzn.to/3Scot9i';
+    if (product.name.includes('Clipboard')) return 'https://amzn.to/43GhE24';
+    if (product.name.includes('Waterproof')) return 'https://amzn.to/4vaDWVH';
+    if (product.name.includes('ID Tag') || product.name.includes('Littmann stethoscope ID tag'))
+      return 'https://amzn.to/4vkCWhS';
+    if (product.name.includes('MDF Acoustica')) return 'https://amzn.to/4oGSASn';
     const searchQuery = encodeURIComponent(product.name);
     return `https://www.amazon.com/s?k=${searchQuery}&tag=shiftsupply01-20`;
   };
@@ -172,6 +172,10 @@ export default function ShiftSupply() {
         {loading && <div className="text-center py-20 text-xl">Loading the best deals...</div>}
         {error && <div className="text-center py-20 text-red-500">{error}</div>}
 
+        {!loading && !error && filteredProducts.length === 0 && (
+          <div className="text-center py-20 text-gray-500">No products match that search.</div>
+        )}
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProducts.map((product) => (
             <div key={product.id} className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl group ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
@@ -199,7 +203,7 @@ export default function ShiftSupply() {
                 <h4 className="text-xl font-semibold mt-2 mb-3 leading-tight">{product.name}</h4>
                 <div className="flex items-baseline gap-3 mb-6">
                   <span className="text-4xl font-bold">${Number(product.price).toFixed(2)}</span>
-                  {product.original_price && (
+                  {product.original_price && Number(product.original_price) > Number(product.price) && (
                     <span className="text-gray-400 line-through">${Number(product.original_price).toFixed(2)}</span>
                   )}
                 </div>
