@@ -179,18 +179,18 @@ export default function ShiftSupply() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProducts.map((product) => (
             <div key={product.id} className={`rounded-3xl overflow-hidden border transition-all hover:shadow-2xl group ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-100'}`}>
-              <div className="h-52 bg-gray-100 relative overflow-hidden">
+              <div className={`h-64 relative overflow-hidden flex items-center justify-center ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
                 {product.image_url ? (
                   <img
                     src={product.image_url}
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    className="max-h-full max-w-full object-contain p-4 group-hover:scale-105 transition-transform"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
                   />
                 ) : (
-                  <div className="h-full flex items-center justify-center text-8xl bg-gradient-to-br from-gray-100 to-gray-200">
+                  <div className="h-full w-full flex items-center justify-center text-8xl bg-gradient-to-br from-gray-100 to-gray-200">
                     {product.image_emoji || '🛍️'}
                   </div>
                 )}
