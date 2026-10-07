@@ -18,7 +18,8 @@ export default function ShiftSupply() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
+  const [email, setEmail] = useState('');
 
   const categories = ['All', 'Stethoscopes', 'Scrubs', 'Shoes', 'Accessories'];
 
@@ -48,15 +49,13 @@ export default function ShiftSupply() {
   }, []);
 
   useEffect(() => {
-    const hasAccepted = localStorage.getItem('shiftsupply_privacy_accepted');
-    if (!hasAccepted) {
-      setShowPrivacy(true);
-    }
+    const seen = localStorage.getItem('shiftsupply_email_prompt');
+    if (!seen) setShowEmail(true);
   }, []);
 
-  const acceptPrivacy = () => {
-    localStorage.setItem('shiftsupply_privacy_accepted', 'true');
-    setShowPrivacy(false);
+  const closeEmail = () => {
+    localStorage.setItem('shiftsupply_email_prompt', 'true');
+    setShowEmail(false);
   };
 
   const filteredProducts = useMemo(() => {
@@ -268,32 +267,36 @@ export default function ShiftSupply() {
         </div>
       </footer>
 
-      {showPrivacy && (
+      {showEmail && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 px-4">
-          <div className={`max-w-lg w-full rounded-3xl p-8 shadow-2xl ${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-            <h3 className="text-2xl font-bold mb-4">Privacy Notice</h3>
-            <div className={`text-sm leading-relaxed space-y-3 max-h-72 overflow-y-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-              <p>
-                ShiftSupply helps nurses compare prices on medical gear and may use affiliate links.
-                If you click a product link and make a purchase, we may earn a commission at no extra cost to you.
-              </p>
-              <p>
-                We may store basic site preferences in your browser (like whether you’ve accepted this notice)
-                and use analytics to understand how the site is used.
-              </p>
-              <p>
-                Contact form submissions are stored so we can respond to you. We do not sell your personal information.
-              </p>
-              <p>
-                By continuing, you agree to this notice and our use of affiliate links.
-              </p>
-            </div>
-            <button
-              onClick={acceptPrivacy}
-              className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-medium transition"
+          <div className={`max-w-md w-full rounded-3xl p-8 shadow-2xl ${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+            <h3 className="text-2xl font-bold mb-2">Get the deals</h3>
+            <p className={`text-sm mb-6 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+              Occasional price drops on scrubs, shoes, and stethoscopes. No spam.
+            </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log('Email signup:', email);
+                closeEmail();
+              }}
+              className="space-y-4"
             >
-              Got it
-            </button>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@email.com"
+                className={`w-full px-5 py-4 rounded-2xl border ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
+              />
+              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-medium">
+                Send me deals
+              </button>
+              <button type="button" onClick={closeEmail} className="w-full text-sm text-gray-500">
+                No thanks
+              </button>
+            </form>
           </div>
         </div>
       )}
