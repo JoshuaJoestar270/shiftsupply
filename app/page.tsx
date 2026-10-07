@@ -20,6 +20,7 @@ export default function ShiftSupply() {
   const [error, setError] = useState<string | null>(null);
   const [showEmail, setShowEmail] = useState(false);
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const categories = ['All', 'Stethoscopes', 'Scrubs', 'Shoes', 'Accessories'];
 
@@ -56,6 +57,18 @@ export default function ShiftSupply() {
   const closeEmail = () => {
     localStorage.setItem('shiftsupply_email_prompt', 'true');
     setShowEmail(false);
+  };
+
+  const submitEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEmailError('');
+    const { error } = await supabase.from('emails').insert([{ email }]);
+    if (error && !error.message.toLowerCase().includes('duplicate')) {
+      console.error(error);
+      setEmailError('Could not save that. Try again.');
+      return;
+    }
+    closeEmail();
   };
 
   const filteredProducts = useMemo(() => {
@@ -274,14 +287,7 @@ export default function ShiftSupply() {
             <p className={`text-sm mb-6 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
               Occasional price drops on scrubs, shoes, and stethoscopes. No spam.
             </p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                console.log('Email signup:', email);
-                closeEmail();
-              }}
-              className="space-y-4"
-            >
+            <form onSubmit={submitEmail} className="space-y-4">
               <input
                 type="email"
                 required
@@ -290,6 +296,7 @@ export default function ShiftSupply() {
                 placeholder="you@email.com"
                 className={`w-full px-5 py-4 rounded-2xl border ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
               />
+              {emailError && <p className="text-sm text-red-500">{emailError}</p>}
               <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-medium">
                 Send me deals
               </button>
