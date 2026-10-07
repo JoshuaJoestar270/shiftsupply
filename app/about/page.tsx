@@ -31,52 +31,57 @@ export default function About() {
       <div className={`py-16 ${isDark ? 'bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900' : 'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700'} text-white`}>
         <div className="max-w-4xl mx-auto text-center px-6">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">About ShiftSupply</h1>
-          <p className="text-xl opacity-90">Helping nurses find better prices on the gear they actually use</p>
+          <p className="text-xl opacity-90">A simple idea from a nurse, built so the gear costs less</p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-6 py-16 space-y-10 leading-relaxed">
         <section>
-          <h2 className="text-3xl font-bold mb-4">Why this exists</h2>
-          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-            Nursing gear adds up fast. Stethoscopes, scrubs, shoes, and everyday accessories
-            can cost a lot more than they should if you only check one store.
-            ShiftSupply was built to make those prices easier to compare in one place.
+          <h2 className="text-3xl font-bold mb-4">Where it came from</h2>
+          <p className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+            ShiftSupply started with my mom. She’s a registered nurse, and she was the one who pointed out
+            how much of a shift gets spent just trying to find a fair price on scrubs, shoes, and the rest
+            of the gear. The broad idea was hers. I built the site so that search isn’t something you have
+            to do store by store after a long day.
           </p>
         </section>
 
         <section>
-          <h2 className="text-3xl font-bold mb-4">What we do</h2>
-          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-            We track common nursing products and highlight current deals from retailers like Amazon.
-            The goal is simple: less searching, fewer overpriced purchases, and a faster way
-            to find gear that fits a real shift schedule.
+          <h2 className="text-3xl font-bold mb-4">What this is</h2>
+          <p className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+            It’s a price list for the stuff nurses actually buy. Stethoscopes, scrubs, shoes, badge reels,
+            pen lights, and the smaller things that still add up. Prices are compared across stores so you
+            can see a better option without opening ten tabs.
           </p>
         </section>
 
         <section>
-          <h2 className="text-3xl font-bold mb-4">How it works</h2>
-          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-            Some product links are affiliate links. If you buy through them, ShiftSupply may
-            earn a small commission at no extra cost to you. That helps keep the site running
-            while we keep adding products and improving the experience.
+          <h2 className="text-3xl font-bold mb-4">How the links work</h2>
+          <p className={isDark ? 'text-gray-300' : 'text-gray-600'}>
+            Some product links are affiliate links. If you buy through one, ShiftSupply may earn a small
+            commission at no extra cost to you. That’s what keeps the site up while more products get added.
           </p>
         </section>
 
         <section>
-          <h2 className="text-3xl font-bold mb-4">Who’s behind it</h2>
-          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-            ShiftSupply is an independent project built after seeing how expensive everyday
-            nursing gear can get. It isn’t owned by a hospital system or a scrub brand.
-            The focus is practical: better prices, clearer comparisons, and a site that stays useful.
-          </p>
+          <h2 className="text-3xl font-bold mb-4">Privacy</h2>
+          <div className={`space-y-3 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p>
+              Email signups are stored so we can send occasional deal updates. Contact form messages are
+              stored so we can reply. We do not sell your information.
+            </p>
+            <p>
+              The site may also store a basic preference in your browser, such as whether you’ve already
+              closed the email popup. Affiliate links may share a referral tag with the store you visit.
+            </p>
+          </div>
         </section>
 
         <section>
-          <h2 className="text-3xl font-bold mb-4">Have a suggestion?</h2>
-          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
-            If there’s a product, brand, or deal you want added, send it over.
-            Real nurse feedback is how the catalog gets better.
+          <h2 className="text-3xl font-bold mb-4">If something’s missing</h2>
+          <p className={`mb-6 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+            If there’s a product, brand, or deal that should be on here, send it. The useful stuff has
+            mostly come from nurses who already know what they need.
           </p>
           <Link
             href="/contact"
